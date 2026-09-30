@@ -30,3 +30,31 @@ standards documented in the context files, update the
 relevant file before continuing.
 
 <!-- END:nextjs-agent-rules -->
+
+## Agent Delegation and Model Routing
+
+Use project-scoped custom agents from `.codex/agents/` whenever work is
+delegated. Choose the narrowest agent that can complete the task:
+
+| Work | Agent | Model and effort |
+|---|---|---|
+| A bounded shell or Git operation, formatting command, or routine verification command with no diagnosis required | `ops_runner` | `gpt-5.6-luna` / `low` |
+| Read-only file discovery or code-path mapping with a clear question | `scout` | `gpt-5.6-luna` / `low` |
+| Architecture decisions, cross-layer features, difficult debugging, migrations, security-sensitive changes, or ambiguous requirements that require substantial reasoning | `deep_worker` | `gpt-5.6-terra` / `xhigh` |
+| High-risk correctness, security, regression, or test-coverage review | `reviewer` | `gpt-5.6-terra` / `xhigh` |
+
+The configured default for any otherwise-unspecified subagent is
+`gpt-5.6-luna` with `low` reasoning effort. Do not use Terra for routine
+commands, simple discovery, or mechanical checks. Do not use a low-effort
+agent to make architectural decisions, diagnose a non-obvious failure, or
+modify multiple application layers.
+
+When an operation is standalone and falls in the first two rows, delegate it
+to the named agent. For complex work, delegate only independent, bounded
+subtasks; keep one agent responsible for a file at a time. The parent agent
+must synthesize results and make any final product decision.
+
+`ops_runner` may run only routine, explicitly bounded commands. It must return
+control if output needs diagnosis or if a command would be destructive,
+state-changing beyond the requested operation, or otherwise requires a design
+decision.

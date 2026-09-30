@@ -4,15 +4,16 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- [phase name]
+- Development workflow configuration
 
 ## Current Goal
 
-- [what you are building right now]
+- Route delegated work to the appropriate Codex agent, model, and reasoning effort.
 
 ## Completed
 
-- None yet.
+- Added project-scoped agent defaults and role definitions for routine operations, discovery, complex implementation, and review.
+- Updated `AGENTS.md` with the required agent-selection policy.
 
 ## In Progress
 
@@ -20,16 +21,17 @@ Update this file after every meaningful implementation change.
 
 ## Next Up
 
-- [first unit to build]
+- Use the defined roles for future delegated work.
 
 ## Open Questions
 
-- [any unresolved decisions]
+- None.
 
 ## Architecture Decisions
 
-- [decisions made that affect the system design]
+- Delegate bounded operational work and straightforward discovery to `gpt-5.6-luna` with low reasoning effort.
+- Delegate high-complexity implementation and risk-focused review to `gpt-5.6-terra` with extra-high reasoning effort.
 
 ## Session Notes
 
-- [context needed to resume in the next session]
+- Agent definitions live in `.codex/agents/`; project defaults live in `.codex/config.toml`.
